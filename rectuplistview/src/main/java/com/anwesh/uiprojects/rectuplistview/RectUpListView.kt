@@ -113,4 +113,48 @@ class RectUpListView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class RULNode(var i : Int, val state : State = State()) {
+
+        private var next : RULNode? = null
+        private var prev : RULNode? = null
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                next = RULNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        init {
+            addNeighbor()
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawRULNode(i, state.scale, paint)
+            prev?.draw(canvas, paint)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : RULNode {
+            var curr : RULNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+    }
 }
