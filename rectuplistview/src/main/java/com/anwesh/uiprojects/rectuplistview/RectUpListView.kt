@@ -15,12 +15,14 @@ import android.graphics.RectF
 import android.util.Log
 
 val nodes : Int = 3
-val rects : Int = 4
+val rects : Int = 5
 val scGap : Float = 0.05f
 val scDiv : Double = 0.51
 val foreColor : Int = Color.parseColor("#1565C0")
 val backColor : Int = Color.parseColor("#BDBDBD")
 val delay : Int = 25
+val offsetFactor : Int = 12
+val hFactor : Float = 1.4f
 
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
@@ -39,14 +41,14 @@ fun Canvas.drawRULNode(i : Int, scale : Float, paint : Paint) {
     val sc1 : Float = scale.divideScale(0, 2)
     val sc2 : Float = scale.divideScale(1, 2)
     save()
-    translate(w/2 - x, gap * (i + 1))
+    translate(w/2 - x, h/ offsetFactor + gap * (i + 1))
     for (j in 0..(rects - 1)) {
         val scj1 : Float = sc1.divideScale(j, rects)
         val scj2 : Float = sc2.divideScale(j, rects)
         Log.d("scale1, scale2 :", "$scj1, $scj2")
         val size : Float = (rSize/2) * scj1
         save()
-        translate(rSize * j,  -rSize / 2 - (rSize * (j + 1)) * scj2)
+        translate(rSize * j,  -rSize / 2 - ((rSize / hFactor) * (j + 1)) * scj2)
         drawRect(RectF(-size, -size, size, size), paint)
         restore()
     }
