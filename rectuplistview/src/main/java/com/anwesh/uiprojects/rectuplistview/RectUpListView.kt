@@ -20,3 +20,21 @@ val scDiv : Double = 0.51
 val strokeFactor : Int = 90
 val sizeFactor : Float = 2.8f
 val foreColor : Int = Color.parseColor("#1565C0")
+
+class RectUpListView(ctx : Context) : View(ctx) {
+
+    private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+    override fun onDraw(canvas : Canvas) {
+
+    }
+
+    override fun onTouchEvent(event : MotionEvent) : Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+
+            }
+        }
+        return true
+    }
+}
