@@ -204,4 +204,13 @@ class RectUpListView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : RectUpListView {
+            val view : RectUpListView = RectUpListView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
